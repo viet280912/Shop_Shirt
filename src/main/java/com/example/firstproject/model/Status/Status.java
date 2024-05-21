@@ -1,4 +1,4 @@
-package com.example.firstproject.model;
+package com.example.firstproject.model.Status;
 
 public enum Status {
     PENDING,

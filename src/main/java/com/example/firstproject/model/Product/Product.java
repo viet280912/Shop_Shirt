@@ -1,5 +1,6 @@
-package com.example.firstproject.model;
+package com.example.firstproject.model.Product;
 
+import com.example.firstproject.model.Category.Category;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

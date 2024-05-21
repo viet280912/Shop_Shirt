@@ -1,5 +1,7 @@
-package com.example.firstproject.model;
+package com.example.firstproject.model.OrderDetail;
 
+import com.example.firstproject.model.Order.Order;
+import com.example.firstproject.model.ProductDetail.ProductDetail;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
