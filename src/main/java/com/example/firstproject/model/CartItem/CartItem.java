@@ -2,9 +2,7 @@ package com.example.firstproject.model.CartItem;
 
 import com.example.firstproject.model.Cart.Cart;
 import com.example.firstproject.model.ProductDetail.ProductDetail;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -19,5 +17,7 @@ public class CartItem {
 
     private ProductDetail productDetail;
 
+    @ManyToOne
+    @JoinColumn(name = "cart_id")
     private Cart cart;
 }

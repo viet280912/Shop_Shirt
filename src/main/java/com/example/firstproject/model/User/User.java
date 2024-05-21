@@ -1,6 +1,7 @@
 package com.example.firstproject.model.User;
 
 import com.example.firstproject.model.Address.Address;
+import com.example.firstproject.model.Cart.Cart;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
