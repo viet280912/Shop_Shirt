@@ -1,6 +1,7 @@
 package com.example.firstproject.model.Order;
 
 import com.example.firstproject.model.Address.Address;
+import com.example.firstproject.model.OrderDetail.OrderDetail;
 import com.example.firstproject.model.Status.Status;
 import com.example.firstproject.model.User.User;
 import jakarta.persistence.*;
@@ -9,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -34,4 +36,7 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "address_id")
     private Address address;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderDetail> orderDetails;
 }
