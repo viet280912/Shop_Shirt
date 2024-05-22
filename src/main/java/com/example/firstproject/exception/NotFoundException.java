@@ -1,4 +1,4 @@
-package com.example.movie3layer.exception;
+package com.example.firstproject.exception;
 
 public class NotFoundException extends RuntimeException{
     public NotFoundException(String message) {

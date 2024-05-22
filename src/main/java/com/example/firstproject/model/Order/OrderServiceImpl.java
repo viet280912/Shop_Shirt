@@ -25,8 +25,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDTO> getOrdersByUserID(int user_id) {
         List<Order> orders = orderRepository.findOrdersByUserID(user_id);
-        if (orders.size() > 0) {
-            return orders.stream().map(orderToOrderDTO::apply).collect(Collectors.toList());
+        if (!orders.isEmpty()) {
+            return orders.stream().map(orderToOrderDTO).collect(Collectors.toList());
         }
         return null;
     }
@@ -34,8 +34,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDTO> getOrdersByAddressID(int address_id) {
         List<Order> orders = orderRepository.findOrdersByAddressID(address_id);
-        if (orders.size() > 0) {
-            return orders.stream().map(orderToOrderDTO::apply).collect(Collectors.toList());
+        if (!orders.isEmpty()) {
+            return orders.stream().map(orderToOrderDTO).collect(Collectors.toList());
         }
         return null;
     }
@@ -43,8 +43,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDTO> getOrdersByStatus(String status) {
         List<Order> orders = orderRepository.findOrdersByStatus(status);
-        if (orders.size() > 0) {
-            return orders.stream().map(orderToOrderDTO::apply).collect(Collectors.toList());
+        if (!orders.isEmpty()) {
+            return orders.stream().map(orderToOrderDTO).collect(Collectors.toList());
         }
         return null;
     }
@@ -52,8 +52,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDTO> getOrdersByRangePrice(float x, float y) {
         List<Order> orders = orderRepository.findOrdersByRangePrice(x, y);
-        if (orders.size() > 0) {
-            return orders.stream().map(orderToOrderDTO::apply).collect(Collectors.toList());
+        if (!orders.isEmpty()) {
+            return orders.stream().map(orderToOrderDTO).collect(Collectors.toList());
         }
         return null;
     }
@@ -61,8 +61,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<OrderDTO> getOrdersByTime(Date time) {
         List<Order> orders = orderRepository.findOrdersByTime(time);
-        if (orders.size() > 0) {
-            return orders.stream().map(orderToOrderDTO::apply).collect(Collectors.toList());
+        if (!orders.isEmpty()) {
+            return orders.stream().map(orderToOrderDTO).collect(Collectors.toList());
         }
         return null;
     }
@@ -72,17 +72,17 @@ public class OrderServiceImpl implements OrderService {
         if (time_x == null) {
             return orderRepository.findOrdersToTime(time_y)
                     .stream()
-                    .map(orderToOrderDTO::apply)
+                    .map(orderToOrderDTO)
                     .collect(Collectors.toList());
         } else if (time_y == null) {
             return orderRepository.findOrdersTimeTo(time_x)
                     .stream()
-                    .map(orderToOrderDTO::apply)
+                    .map(orderToOrderDTO)
                     .collect(Collectors.toList());
         } else {
             return orderRepository.findOrdersInTimes(time_x, time_y)
                     .stream()
-                    .map(orderToOrderDTO::apply)
+                    .map(orderToOrderDTO)
                     .collect(Collectors.toList());
         }
     }

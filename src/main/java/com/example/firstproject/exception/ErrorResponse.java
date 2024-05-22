@@ -1,4 +1,4 @@
-package com.example.movie3layer.exception;
+package com.example.firstproject.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

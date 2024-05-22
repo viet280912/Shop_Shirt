@@ -1,5 +1,6 @@
 package com.example.firstproject.model.Category;
 
+import com.example.firstproject.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,16 +13,28 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<Category> getAll() {
-        return categoryRepository.findAll();
+        List<Category> categories = categoryRepository.findAll();
+        if (!categories.isEmpty()) {
+            return categories;
+        }
+        throw new NotFoundException("Empty");
     }
 
     @Override
     public List<Category> getCategoriesByProductID(int product_id) {
-        return categoryRepository.getCategoryByProductId(product_id);
+        List<Category> categories = categoryRepository.getCategoryByProductId(product_id);
+        if (!categories.isEmpty()) {
+            return categories;
+        }
+        throw new NotFoundException("Empty");
     }
 
     @Override
     public List<Category> findCategoriesByName(String category) {
-        return categoryRepository.findCategoriesByName(category);
+        List<Category> categories =  categoryRepository.findCategoriesByName(category);
+        if (!categories.isEmpty()) {
+            return categories;
+        }
+        throw new NotFoundException("Empty");
     }
 }
