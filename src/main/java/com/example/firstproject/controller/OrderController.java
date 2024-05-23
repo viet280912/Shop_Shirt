@@ -37,12 +37,12 @@ public class OrderController {
             }
             return new ResponseEntity<>(
                     "Empty List",
-                    HttpStatus.OK
+                    HttpStatus.NOT_FOUND
             );
         } catch (Exception e) {
             return new ResponseEntity<>(
                     e,
-                    HttpStatus.OK
+                    HttpStatus.BAD_REQUEST
             );
         }
 

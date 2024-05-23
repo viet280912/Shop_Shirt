@@ -1,9 +1,13 @@
 package com.example.firstproject.dto;
 
+import com.example.firstproject.model.Address.Address;
 import com.example.firstproject.model.Status.Status;
+import com.example.firstproject.model.User.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,6 +31,12 @@ public class OrderDTO {
     @JsonProperty("status")
     private Status status;
 
-    @JsonProperty("status")
+    @JsonProperty("detail")
     private List<OrderDetailDTO> ordersDetail;
+
+    @JsonProperty("user_id")
+    private int user_id;
+
+    @JsonProperty("address_id")
+    private int address_id;
 }

@@ -3,6 +3,7 @@ package com.example.firstproject.model.Order;
 import com.example.firstproject.dto.OrderDTO;
 import com.example.firstproject.exception.NotFoundException;
 import com.example.firstproject.mapper.OrderMapper;
+import com.example.firstproject.model.Address.Address;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -95,5 +96,21 @@ public class OrderServiceImpl implements OrderService {
                     .map(orderMapper)
                     .collect(Collectors.toList());
         }
+    }
+
+    @Override
+    public Order createOrder(OrderDTO order) {
+        return orderRepository.save(orderMapper.convertToOrder(order));
+    }
+
+    @Override
+    public Order updateOrder(OrderDTO orderDTO) {
+        Order order = orderMapper.convertToOrder(orderDTO);
+        return orderRepository.save(order);
+    }
+
+    @Override
+    public void deleteOrder(int id) {
+        orderRepository.deleteById(id);
     }
 }

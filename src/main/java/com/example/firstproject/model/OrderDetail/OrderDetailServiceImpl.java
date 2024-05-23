@@ -42,4 +42,26 @@ public class OrderDetailServiceImpl implements OrderDetailService {
         }
         throw new NotFoundException("Empty");
     }
+
+    @Override
+    public OrderDetail createOrderDetail(OrderDetailDTO orderDetailDTO) {
+        return orderDetailRepository.save(productDetailDTO.convertToOrderDetail(orderDetailDTO));
+    }
+
+    @Override
+    public OrderDetail updateOrderDetail(OrderDetailDTO orderDetail) {
+        OrderDetail orderDetailUpdate = productDetailDTO.convertToOrderDetail(orderDetail);
+
+        return orderDetailRepository.save(orderDetailUpdate);
+    }
+
+    @Override
+    public Object deleteOrderDetail(int id) {
+        try {
+            orderDetailRepository.deleteById(id);
+            return null;
+        } catch (Exception e) {
+            return e;
+        }
+    }
 }

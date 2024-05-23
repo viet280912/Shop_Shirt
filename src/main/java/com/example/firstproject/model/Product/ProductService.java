@@ -13,4 +13,6 @@ public interface ProductService {
 
 //    search product by name, category
     List<ProductDTO> searchProductsByName(String name, String category);
+
+//    add product
 }

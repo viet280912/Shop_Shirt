@@ -37,4 +37,19 @@ public class CategoryServiceImpl implements CategoryService {
         }
         throw new NotFoundException("Empty");
     }
+
+    @Override
+    public Category createCategory(Category category) {
+        return categoryRepository.save(category);
+    }
+
+    @Override
+    public Category updateCategory(Category category) {
+        return categoryRepository.save(category);
+    }
+
+    @Override
+    public void deleteCategory(int id) {
+        categoryRepository.deleteById(id);
+    }
 }
