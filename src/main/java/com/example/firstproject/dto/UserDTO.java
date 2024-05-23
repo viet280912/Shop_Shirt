@@ -13,5 +13,5 @@ public class UserDTO {
     private String userName;
     private String password;
     public List<Address> addresses;
-    public List<Cart> carts;
+    public Cart cart;
 }

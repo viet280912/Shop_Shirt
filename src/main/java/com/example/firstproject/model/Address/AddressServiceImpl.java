@@ -52,5 +52,21 @@ public class AddressServiceImpl implements AddressService{
         return addresses;
     }
 
+    @Override
+    public Address updateAddress(AddressDTO addressDTO) {
+        Address addressUpdating = addressRepository.findById(addressDTO.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Address not found with id: "+ addressDTO.getId()));
+        Address addressMapped = addressMapper.convertToAddress(addressDTO);
+        addressUpdating.setCountry(addressMapped.getCountry());
+        addressUpdating.setCity(addressMapped.getCity());
+        addressUpdating.setDistrict(addressMapped.getDistrict());
+        addressUpdating.setWard(addressMapped.getWard());
+        addressUpdating.setStreet(addressMapped.getStreet());
+        addressUpdating.setUser(addressMapped.getUser());
+        addressUpdating.setOrders(new ArrayList<>());
+        Address addressUpdated = addressRepository.save(addressUpdating);
+        return addressUpdated;
+    }
+
 
 }

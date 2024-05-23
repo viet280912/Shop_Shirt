@@ -9,4 +9,5 @@ public interface AddressService {
     List<Address> getAllAddress();
     Address createAddress(AddressDTO addressDTO);
     List<Address> getAllAddressByUserId(Integer userId);
+    Address updateAddress(AddressDTO addressDTO);
 }
