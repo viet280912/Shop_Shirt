@@ -20,11 +20,12 @@ public class ProductToProductDetailDTO implements Function<ProductDetail, Produc
     }
     @Override
     public ProductDetailDTO apply(ProductDetail productDetail) {
-        return new ProductDetailDTO(
-                productDetail.getProductDetail_id(),
-                productDetail.getSize(),
-                productDetail.getColor(),
-                productDetail.getStock()
-        );
+//        return new ProductDetailDTO(
+//                productDetail.getProductDetail_id(),
+//                productDetail.getSize(),
+//                productDetail.getColor(),
+//                productDetail.getStock(),
+//        );
+        return null;
     }
 }

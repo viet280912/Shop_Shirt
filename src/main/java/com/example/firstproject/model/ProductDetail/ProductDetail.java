@@ -22,9 +22,7 @@ public class ProductDetail {
     private int productDetail_id;
 
     private String size;
-
     private String color;
-
     private int stock;
 
     @Lob
