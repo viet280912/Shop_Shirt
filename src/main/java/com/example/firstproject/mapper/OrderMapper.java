@@ -2,10 +2,7 @@ package com.example.firstproject.mapper;
 
 
 import com.example.firstproject.dto.OrderDTO;
-import com.example.firstproject.dto.OrderDetailDTO;
-import com.example.firstproject.dto.ProductDetailDTO;
 import com.example.firstproject.model.Order.Order;
-import com.example.firstproject.model.OrderDetail.OrderDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +10,9 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
-public class OrderToOrderDTO implements Function<Order, OrderDTO> {
+public class OrderMapper implements Function<Order, OrderDTO> {
     @Autowired
-    private ProductToProductDetailDTO productDetailDTO;
+    private ProductDetailMapper productDetailDTO;
 
     @Override
     public OrderDTO apply(Order order) {

@@ -18,6 +18,9 @@ public interface OrderService {
 //    get order by status
     List<OrderDTO> getOrdersByStatus (String status);
 
+//    get order by user_id, address_id, status
+    List<OrderDTO> findOrderByForm (int user_id, int address_id, String status);
+
 //    get orders by range price (x < orders < y)
     List<OrderDTO> getOrdersByRangePrice (float x, float y);
 

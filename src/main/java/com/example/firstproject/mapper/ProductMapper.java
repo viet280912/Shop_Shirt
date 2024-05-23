@@ -6,7 +6,7 @@ import java.util.function.Function;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ProductToProductDTO implements Function<Product, ProductDTO> {
+public class ProductMapper implements Function<Product, ProductDTO> {
     @Override
     public ProductDTO apply(Product product) {
         return new ProductDTO(

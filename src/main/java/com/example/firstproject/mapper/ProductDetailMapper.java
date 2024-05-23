@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.function.Function;
 
 @Service
-public class ProductToProductDetailDTO implements Function<ProductDetail, ProductDetailDTO> {
+public class ProductDetailMapper implements Function<ProductDetail, ProductDetailDTO> {
     public OrderDetailDTO convertOrderDetailDTO(OrderDetail orderDetail) {
         return new OrderDetailDTO(
                 orderDetail.getOrderDetail_id(),

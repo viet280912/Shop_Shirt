@@ -26,6 +26,9 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     @Query(value = "SELECT orders.* FROM orders WHERE addresses.address_id = UPPER(:status)", nativeQuery = true)
     List<Order> findOrdersByStatus (@Param("status") String status);
 
+    @Query(value = "SELECT orders.* FROM orders WHERE user_id = :user_id AND address_id = :address_id AND status = UPPER(:status)", nativeQuery = true)
+    List<Order> findOrdersByForm (@Param("user_id") int user_id, @Param("address_id") int address_id, @Param("status") String status);
+
 //    find orders by range price
     @Query(value = "SELECT orders.* FROM orders WHERE total_price BETWEEN :x AND :y", nativeQuery = true)
     List<Order> findOrdersByRangePrice(@Param("x") float x, @Param("y") float y);
