@@ -37,4 +37,18 @@ public class ProductDetail {
 
     @OneToMany(mappedBy = "productDetail", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CartItem> cartItems;
+
+    public ProductDetail(int productDetail_id,
+                         String size, String color,
+                         int stock, Blob image,
+                         List<OrderDetail> orderDetails,
+                         Product product) {
+        this.productDetail_id = productDetail_id;
+        this.size = size;
+        this.color = color;
+        this.stock = stock;
+        this.image = image;
+        this.orderDetails = orderDetails;
+        this.product = product;
+    }
 }

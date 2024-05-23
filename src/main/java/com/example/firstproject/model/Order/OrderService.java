@@ -1,6 +1,7 @@
 package com.example.firstproject.model.Order;
 
 import com.example.firstproject.dto.OrderDTO;
+import com.example.firstproject.model.Status.Status;
 
 import java.util.Date;
 import java.util.List;
@@ -29,4 +30,13 @@ public interface OrderService {
 
 //    get orders in times
     List<OrderDTO> getOrdersInTimes (Date time_x, Date time_y);
+
+//    add order
+    Order createOrder (OrderDTO order);
+
+//    update order
+    Order updateOrder (OrderDTO orderDTO);
+
+//    delete order
+    void deleteOrder (int id);
 }

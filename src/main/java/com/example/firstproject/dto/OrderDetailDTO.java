@@ -17,9 +17,12 @@ public class OrderDetailDTO {
     @JsonProperty("quantity")
     private int quantity;
 
+    @JsonProperty("order_id")
+    private int order_id;
+
     @JsonProperty("price")
     private Float price;
 
-    @JsonProperty("orderDetail_id")
-    private ProductDetailDTO product;
+    @JsonProperty("productDetail")
+    private ProductDetailDTO productDetail;
 }
