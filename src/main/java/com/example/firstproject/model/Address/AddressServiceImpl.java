@@ -1,6 +1,7 @@
 package com.example.firstproject.model.Address;
 
 import com.example.firstproject.dto.AddressDTO;
+import com.example.firstproject.exception.NotFoundException;
 import com.example.firstproject.mapper.AddressMapper;
 import com.example.firstproject.model.User.User;
 import com.example.firstproject.model.User.UserRepository;
@@ -38,6 +39,17 @@ public class AddressServiceImpl implements AddressService{
         addressCreating.setOrders(new ArrayList<>());
         Address addressCreated = addressRepository.save(addressCreating);
         return addressCreated;
+    }
+
+    @Override
+    public List<Address> getAllAddressByUserId(Integer userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("Not found user with id: "+ userId));
+        List<Address> addresses = addressRepository.findAllByUser(user);
+        if (addresses.isEmpty()){
+            throw new NotFoundException("List address is empty.");
+        }
+        return addresses;
     }
 
 
