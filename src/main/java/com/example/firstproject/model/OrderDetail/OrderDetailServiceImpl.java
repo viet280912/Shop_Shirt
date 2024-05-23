@@ -2,8 +2,8 @@ package com.example.firstproject.model.OrderDetail;
 
 import com.example.firstproject.dto.OrderDetailDTO;
 import com.example.firstproject.exception.NotFoundException;
-import com.example.firstproject.mapper.OrderToOrderDTO;
-import com.example.firstproject.mapper.ProductToProductDetailDTO;
+import com.example.firstproject.mapper.ProductDetailMapper;
+import com.example.firstproject.mapper.ProductDetailToDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +15,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     @Autowired
     private OrderDetailRepository orderDetailRepository;
     @Autowired
-    private ProductToProductDetailDTO productDetailDTO;
+    private ProductDetailToDTO productDetailDTO;
 
     @Override
     public OrderDetailDTO getOrderDetailByID(int id) {

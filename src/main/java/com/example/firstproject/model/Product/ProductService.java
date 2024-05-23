@@ -11,5 +11,6 @@ public interface ProductService {
 //    get single product by id
     ProductDTO getProductByID(int id);
 
-//
+//    search product by name, category
+    List<ProductDTO> searchProductsByName(String name, String category);
 }
