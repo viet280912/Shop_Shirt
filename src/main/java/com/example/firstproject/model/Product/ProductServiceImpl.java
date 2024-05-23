@@ -39,4 +39,21 @@ public class ProductServiceImpl implements ProductService{
         }
         throw new NotFoundException("Empty");
     }
+
+    @Override
+    public Product createProduct(ProductDTO productDTO) {
+        Product product = productMapper.convertProduct(productDTO);
+        return productRepository.save(product);
+    }
+
+    @Override
+    public Product updateProduct(ProductDTO productDTO) {
+        Product product = productMapper.convertProduct(productDTO);
+        return productRepository.save(product);
+    }
+
+    @Override
+    public void deleteProduct(int id) {
+        productRepository.deleteById(id);
+    }
 }

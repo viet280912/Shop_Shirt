@@ -15,4 +15,11 @@ public interface ProductService {
     List<ProductDTO> searchProductsByName(String name, String category);
 
 //    add product
+    Product createProduct (ProductDTO productDTO);
+
+//    update product
+    Product updateProduct (ProductDTO productDTO);
+
+//    delete product
+    void deleteProduct (int id);
 }
