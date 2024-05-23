@@ -1,23 +1,19 @@
 package com.example.firstproject.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Blob;
+
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class ProductDetailDTO {
-    @JsonProperty("productDetail_id")
-    private int productDetail_id;
-
-    @JsonProperty("size")
+    private int productDetailId;
     private String size;
-
-    @JsonProperty("color")
     private String color;
-
-    @JsonProperty("stock")
     private int stock;
+    private Blob image;
+    private int productId;
 }

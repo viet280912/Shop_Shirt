@@ -1,30 +1,18 @@
 package com.example.firstproject.mapper;
 
-import com.example.firstproject.dto.OrderDetailDTO;
 import com.example.firstproject.dto.ProductDetailDTO;
-import com.example.firstproject.model.OrderDetail.OrderDetail;
 import com.example.firstproject.model.ProductDetail.ProductDetail;
-import org.springframework.stereotype.Service;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.factory.Mappers;
 
-import java.util.function.Function;
+@Mapper
+public interface ProductDetailMapper {
+    ProductDetailMapper INSTANCE = Mappers.getMapper(ProductDetailMapper.class);
 
-@Service
-public class ProductDetailMapper implements Function<ProductDetail, ProductDetailDTO> {
-    public OrderDetailDTO convertOrderDetailDTO(OrderDetail orderDetail) {
-        return new OrderDetailDTO(
-                orderDetail.getOrderDetail_id(),
-                orderDetail.getQuantity(),
-                orderDetail.getPrice(),
-                apply(orderDetail.getProductDetail())
-        );
-    }
-    @Override
-    public ProductDetailDTO apply(ProductDetail productDetail) {
-        return new ProductDetailDTO(
-                productDetail.getProductDetail_id(),
-                productDetail.getSize(),
-                productDetail.getColor(),
-                productDetail.getStock()
-        );
-    }
+    @Mapping(source = "product.product_id", target = "productId")
+    ProductDetailDTO toDto(ProductDetail productDetail);
+
+    @Mapping(source = "productId", target = "product.product_id")
+    ProductDetail toEntity(ProductDetailDTO productDetailDto);
 }

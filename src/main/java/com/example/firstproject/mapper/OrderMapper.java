@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Service
 public class OrderMapper implements Function<Order, OrderDTO> {
     @Autowired
-    private ProductDetailMapper productDetailDTO;
+    private ProductDetailToDTO productDetailDTO;
 
     @Override
     public OrderDTO apply(Order order) {
