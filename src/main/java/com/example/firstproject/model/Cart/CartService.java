@@ -5,4 +5,5 @@ import java.util.Optional;
 
 public interface CartService {
     Cart findCartByUser(Integer userId);
+    Cart addCartItemToCart(Integer userId, Integer cartItemId);
 }

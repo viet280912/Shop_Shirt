@@ -44,4 +44,16 @@ public class CartItemServiceImpl implements CartItemService{
         cartItemRepository.save(cartItemUpdating);
         return cartItemUpdating;
     }
+
+    @Override
+    public CartItem createCartItem(CartItemDTO cartItemDTO) {
+        CartItem cartItem = new CartItem();
+        CartItem cartItemMapped = cartItemMapper.convertToCartItem(cartItemDTO);
+        cartItem.setCartItem_id(cartItemDTO.getId());
+        cartItem.setCart(cartItemMapped.getCart());
+        cartItem.setQuantity(cartItemMapped.getQuantity());
+        cartItem.setProductDetail(cartItemMapped.getProductDetail());
+        cartItemRepository.save(cartItem);
+        return cartItem;
+    }
 }

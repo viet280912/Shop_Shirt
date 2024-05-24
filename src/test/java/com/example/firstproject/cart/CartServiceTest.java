@@ -7,6 +7,7 @@ import com.example.firstproject.model.Cart.CartService;
 import com.example.firstproject.model.User.User;
 import com.example.firstproject.model.User.UserRepository;
 import com.example.firstproject.model.User.UserService;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -20,6 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Transactional
 public class CartServiceTest {
     @Autowired
     private UserRepository userRepository;

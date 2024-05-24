@@ -8,6 +8,7 @@ import com.example.firstproject.model.Address.AddressService;
 import com.example.firstproject.model.User.User;
 import com.example.firstproject.model.User.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -16,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Transactional
 public class AddressServiceTest {
     @Autowired
     private AddressService addressService;
@@ -26,7 +28,7 @@ public class AddressServiceTest {
     void createAddressReturnAddress(){
         //given
         User user = new User();
-        user.setFullName("Tran Xuan Phuc");
+        user.setFullName("Ho Xuan Thuy");
         userRepository.save(user);
 
         AddressDTO addressDTO = new AddressDTO();
