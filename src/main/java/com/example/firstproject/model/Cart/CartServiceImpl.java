@@ -14,6 +14,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class CartServiceImpl implements CartService{
@@ -94,6 +95,29 @@ public class CartServiceImpl implements CartService{
                 .orElseThrow(() -> new NotFoundException("Not found cartItem with id: "+ cartItemId));
         cartItemListUpdating.remove(cartItem);
         cart.setCartItems(cartItemListUpdating);
+        cartRepository.save(cart);
+        return cart;
+    }
+
+    @Override
+    public Cart removeManyCartItemInCart(Integer userId, List<Integer> listIdCartItem) {
+        //find cart by user
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
+        Cart cart = cartRepository.findCartByUser(user)
+                .orElseThrow(() -> new EntityNotFoundException("Cart not found with userid: "+ userId));
+        //convert list id -> list item
+        List<CartItem> listItemDelete = new ArrayList<>();
+        for (Integer itemId :
+             listIdCartItem) {
+            //find item with id
+            CartItem item  = cartItemRepository.findById(itemId)
+                    .orElseThrow(() -> new NotFoundException("Item not found with id: " + itemId));
+            listItemDelete.add(item);
+        }
+
+        //delete
+        cart.getCartItems().removeAll(listItemDelete);
         cartRepository.save(cart);
         return cart;
     }

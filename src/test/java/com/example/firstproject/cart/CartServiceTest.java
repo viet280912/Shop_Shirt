@@ -24,6 +24,8 @@ import org.springframework.test.annotation.Rollback;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -159,6 +161,41 @@ public class CartServiceTest {
 
         //when
         Cart result = cartService.removeCartItemInCart(user.getUser_id(), cartAfterAdd.getCartItems().get(0).getCartItem_id());
+
+        //then
+        assertEquals(0, result.getCartItems().size());
+    }
+    @Test
+    @Rollback
+    void removeManyCartItemInCart_Success(){
+        CartItemDTO cartItemDTO1 = new CartItemDTO();
+        cartItemDTO1.setId(0);
+        cartItemDTO1.setProductDetailId(productDetail1.getProductDetail_id());
+        cartItemDTO1.setQuantity(2);
+        cartItemDTO1.setUserId(user.getUser_id());
+        cartService.addCartItemToCart(cartItemDTO1);
+
+        CartItemDTO cartItemDTO2 = new CartItemDTO();
+        cartItemDTO2.setId(0);
+        cartItemDTO2.setProductDetailId(productDetail2.getProductDetail_id());
+        cartItemDTO2.setQuantity(3);
+        cartItemDTO2.setUserId(user.getUser_id());
+        cartService.addCartItemToCart(cartItemDTO2);
+
+        CartItemDTO cartItemDTO3 = new CartItemDTO();
+        cartItemDTO3.setId(0);
+        cartItemDTO3.setProductDetailId(productDetail3.getProductDetail_id());
+        cartItemDTO3.setQuantity(3);
+        cartItemDTO3.setUserId(user.getUser_id());
+        cartService.addCartItemToCart(cartItemDTO3);
+
+        //when
+        List<Integer> listIdDelete = cart.getCartItems().
+                stream()
+                .map(CartItem::getCartItem_id)
+                .collect(Collectors.toList());
+
+        Cart result = cartService.removeManyCartItemInCart(user.getUser_id(), listIdDelete);
 
         //then
         assertEquals(0, result.getCartItems().size());

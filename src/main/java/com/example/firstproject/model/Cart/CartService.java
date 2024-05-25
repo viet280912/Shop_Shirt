@@ -9,4 +9,5 @@ public interface CartService {
     Cart findCartByUser(Integer userId);
     Cart addCartItemToCart(CartItemDTO cartItemDTO);
     Cart removeCartItemInCart(Integer userId, Integer cartItemId);
+    Cart removeManyCartItemInCart(Integer userId, List<Integer> listIdCartItem);
 }
