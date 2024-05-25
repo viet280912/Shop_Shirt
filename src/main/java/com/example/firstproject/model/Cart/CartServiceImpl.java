@@ -6,6 +6,8 @@ import com.example.firstproject.exception.NotFoundException;
 import com.example.firstproject.mapper.CartItemMapper;
 import com.example.firstproject.model.CartItem.CartItem;
 import com.example.firstproject.model.CartItem.CartItemRepository;
+import com.example.firstproject.model.ProductDetail.ProductDetail;
+import com.example.firstproject.model.ProductDetail.ProductDetailRepository;
 import com.example.firstproject.model.User.User;
 import com.example.firstproject.model.User.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -22,7 +24,7 @@ public class CartServiceImpl implements CartService{
     @Autowired
     private CartItemRepository cartItemRepository;
     @Autowired
-    private CartItemMapper cartItemMapper;
+    private ProductDetailRepository productDetailRepository;
 
     @Override
     public Cart findCartByUser(Integer userId) {
@@ -34,12 +36,12 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
-    public Cart addCartItemToCart(Integer userId, CartItemDTO cartItemDTO) {
+    public Cart addCartItemToCart(CartItemDTO cartItemDTO) {
         //find cart by user
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + userId));
+        User user = userRepository.findById(cartItemDTO.getUserId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + cartItemDTO.getUserId()));
         Cart cart = cartRepository.findCartByUser(user)
-                .orElseThrow(() -> new EntityNotFoundException("Cart not found with userid: "+ userId));
+                .orElseThrow(() -> new EntityNotFoundException("Cart not found with userid: "+ cartItemDTO.getUserId()));
 
         //check cartItem in list<cartItem>
         List<CartItem> cartItemListUpdating = cart.getCartItems();
@@ -53,11 +55,12 @@ public class CartServiceImpl implements CartService{
 
         //creat cart item
         CartItem cartItem = new CartItem();
-        CartItem cartItemMapped = cartItemMapper.convertToCartItem(cartItemDTO);
-        cartItem.setCartItem_id(cartItemDTO.getId());
-        cartItem.setCart(cartItemMapped.getCart());
-        cartItem.setQuantity(cartItemMapped.getQuantity());
-        cartItem.setProductDetail(cartItemMapped.getProductDetail());
+        cartItem.setCartItem_id(0);
+        cartItem.setCart(cart);
+        cartItem.setQuantity(cartItemDTO.getQuantity());
+        ProductDetail productDetail = productDetailRepository.findById(cartItemDTO.getProductDetailId())
+                        .orElseThrow(() -> new NotFoundException("ProductDetail not found with id: " + cartItemDTO.getProductDetailId()));
+        cartItem.setProductDetail(productDetail);
         cartItemRepository.save(cartItem);
 
 

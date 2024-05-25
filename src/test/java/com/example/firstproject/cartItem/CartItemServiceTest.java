@@ -33,7 +33,6 @@ public class CartItemServiceTest {
     @Test
     void createCartItemTest(){
         //given
-        ProductDetail productDetail = new ProductDetail();
         User user = new User();
         user.setUser_id(0);
         user.setFullName("full name");
@@ -49,7 +48,7 @@ public class CartItemServiceTest {
         userRepository.save(user);
         CartItemDTO cartItemDTO = new CartItemDTO();
         cartItemDTO.setId(0);
-        cartItemDTO.setCartId(cart.getCart_id());
+        cartItemDTO.setUserId(cart.getUser().getUser_id());
         cartItemDTO.setQuantity(5);
 
         //when

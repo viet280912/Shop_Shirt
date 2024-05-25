@@ -11,5 +11,5 @@ public class CartItemDTO {
     private Integer id;
     private Integer productDetailId;
     private Integer quantity;
-    private Integer cartId;
+    private Integer userId;
 }
