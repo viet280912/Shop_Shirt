@@ -44,7 +44,7 @@ public class AddressServiceImpl implements AddressService{
     @Override
     public List<Address> getAllAddressByUserId(Integer userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("Not found user with id: "+ userId));
+                .orElseThrow(() -> new NotFoundException("Not found user with id: "+ userId));
         List<Address> addresses = addressRepository.findAllByUser(user);
         if (addresses.isEmpty()){
             throw new NotFoundException("List address is empty.");
@@ -53,19 +53,40 @@ public class AddressServiceImpl implements AddressService{
     }
 
     @Override
-    public Address updateAddress(AddressDTO addressDTO) {
-        Address addressUpdating = addressRepository.findById(addressDTO.getId())
-                .orElseThrow(() -> new EntityNotFoundException("Address not found with id: "+ addressDTO.getId()));
-        Address addressMapped = addressMapper.convertToAddress(addressDTO);
-        addressUpdating.setCountry(addressMapped.getCountry());
-        addressUpdating.setCity(addressMapped.getCity());
-        addressUpdating.setDistrict(addressMapped.getDistrict());
-        addressUpdating.setWard(addressMapped.getWard());
-        addressUpdating.setStreet(addressMapped.getStreet());
-        addressUpdating.setUser(addressMapped.getUser());
+    public Address updateAddress(Integer addressId,  AddressDTO addressDTO) {
+        Address addressUpdating = addressRepository.findById(addressId)
+                .orElseThrow(() -> new NotFoundException("Address not found with id: "+ addressDTO.getId()));
+        addressUpdating.setCountry(addressDTO.getCountry());
+        addressUpdating.setCity(addressDTO.getCity());
+        addressUpdating.setDistrict(addressDTO.getDistrict());
+        addressUpdating.setWard(addressDTO.getWard());
+        addressUpdating.setStreet(addressDTO.getStreet());
+        User user = userRepository.findById(addressDTO.getUser_id())
+                        .orElseThrow(() -> new NotFoundException("User not found with id: " + addressDTO.getUser_id()));
+        addressUpdating.setUser(user);
         addressUpdating.setOrders(new ArrayList<>());
         Address addressUpdated = addressRepository.save(addressUpdating);
         return addressUpdated;
+    }
+
+    @Override
+    public void deleteOneAddress(Integer addressId) {
+        addressRepository.findById(addressId)
+                .orElseThrow(() -> new NotFoundException("Address not found with id: "+ addressId));
+
+        addressRepository.deleteById(addressId);
+    }
+
+    @Override
+    public void deleteManyAddress(List<Integer> listId) {
+        List<Address> listItemDelete = new ArrayList<>();
+        for (Integer id:
+            listId ) {
+            Address item = addressRepository.findById(id)
+                    .orElseThrow(() -> new NotFoundException("Address not found with id" + id));
+            listItemDelete.add(item);
+        }
+        addressRepository.deleteAll(listItemDelete);
     }
 
 
