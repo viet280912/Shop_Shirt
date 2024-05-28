@@ -89,7 +89,7 @@ public class AddressServiceTest {
         addressDTO.setUser_id(4);
 
         //when
-        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> addressService.createAddress(addressDTO));
+        NotFoundException exception = assertThrows(NotFoundException.class, () -> addressService.createAddress(addressDTO));
 
         //then
         assertEquals("Not found user with id: 4", exception.getMessage());
