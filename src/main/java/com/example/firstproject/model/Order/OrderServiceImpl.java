@@ -20,6 +20,15 @@ public class OrderServiceImpl implements OrderService {
     private OrderMapper orderMapper;
 
     @Override
+    public List<OrderDTO> getAllOrder() {
+        List<Order> orders = orderRepository.findAll();
+        if (!orders.isEmpty()) {
+            return orders.stream().map(orderMapper).collect(Collectors.toList());
+        }
+        throw new NotFoundException("Empty");
+    }
+
+    @Override
     public OrderDTO getOrderByID(int order_id) {
         return orderMapper.apply(orderRepository.findOrderByID(order_id));
     }
@@ -100,7 +109,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order createOrder(OrderDTO order) {
-        return orderRepository.save(orderMapper.convertToOrder(order));
+        try {
+            Order newOrder = orderMapper.convertToOrder(order);
+            return orderRepository.save(newOrder);
+        } catch (Exception e) {
+            // Log the exception
+            System.err.println("Failed to save order: " + e.getMessage());
+            return null;
+        }
     }
 
     @Override

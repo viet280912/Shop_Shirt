@@ -7,6 +7,9 @@ import java.util.Date;
 import java.util.List;
 
 public interface OrderService {
+//    get all order
+    List<OrderDTO> getAllOrder ();
+
 //    get order by order id
     OrderDTO getOrderByID(int order_id);
 

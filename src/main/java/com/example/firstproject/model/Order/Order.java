@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -22,7 +23,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int order_id;
 
-    private Date order_dateTime;
+    @Column(name = "order_date_time", columnDefinition = "datetime")
+    private LocalDateTime order_dateTime;
 
     private Float total_price;
 
