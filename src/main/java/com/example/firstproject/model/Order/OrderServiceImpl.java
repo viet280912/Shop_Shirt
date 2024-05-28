@@ -18,6 +18,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.example.firstproject.model.Status.Status.*;
+
 @Service
 public class OrderServiceImpl implements OrderService {
     @Autowired
@@ -149,7 +151,7 @@ public class OrderServiceImpl implements OrderService {
             Order newOrder = new Order(
                     LocalDateTime.now(),
                     createOrder.getTotal_price(),
-                    createOrder.getStatus(),
+                    PENDING,
                     user,
                     address
             );
