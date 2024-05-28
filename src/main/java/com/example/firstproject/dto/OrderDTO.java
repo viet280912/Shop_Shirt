@@ -13,6 +13,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -23,7 +24,7 @@ public class OrderDTO {
     private int order_id;
 
     @JsonProperty("order_dateTime")
-    private Date order_dateTime;
+    private LocalDateTime order_dateTime;
 
     @JsonProperty("total_price")
     private Float total_price;

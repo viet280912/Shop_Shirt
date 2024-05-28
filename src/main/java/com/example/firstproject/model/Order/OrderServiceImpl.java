@@ -4,9 +4,16 @@ import com.example.firstproject.dto.OrderDTO;
 import com.example.firstproject.exception.NotFoundException;
 import com.example.firstproject.mapper.OrderMapper;
 import com.example.firstproject.model.Address.Address;
+import com.example.firstproject.model.Address.AddressRepository;
+import com.example.firstproject.model.OrderDetail.OrderDetailRepository;
+import com.example.firstproject.model.OrderDetail.OrderDetailService;
+import com.example.firstproject.model.User.User;
+import com.example.firstproject.model.User.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,6 +25,25 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderMapper orderMapper;
+
+    @Autowired
+    private OrderDetailRepository orderDetailRepository;
+
+    @Autowired
+    private OrderDetailService orderDetailService;
+
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private AddressRepository addressRepository;
+    @Override
+    public List<OrderDTO> getAllOrder() {
+        List<Order> orders = orderRepository.findAll();
+        if (!orders.isEmpty()) {
+            return orders.stream().map(orderMapper).collect(Collectors.toList());
+        }
+        throw new NotFoundException("Empty");
+    }
 
     @Override
     public OrderDTO getOrderByID(int order_id) {
@@ -100,7 +126,40 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order createOrder(OrderDTO order) {
-        return orderRepository.save(orderMapper.convertToOrder(order));
+        try {
+            Order newOrder = orderMapper.convertToOrder(order);
+
+            return orderRepository.save(newOrder);
+        } catch (Exception e) {
+            // Log the exception
+            System.err.println("Failed to save order: " + e.getMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public Order createOrder(CreateOrder createOrder) {
+        try {
+            User user = userRepository.findById(createOrder.getUser_id())
+                    .orElseThrow(() -> new EntityNotFoundException("Not found user with id: "+createOrder.getUser_id()));
+
+            Address address = addressRepository.findById(createOrder.getAddress_id())
+                    .orElseThrow(() -> new EntityNotFoundException("Not found address with id: "+createOrder.getAddress_id()));
+
+            Order newOrder = new Order(
+                    LocalDateTime.now(),
+                    createOrder.getTotal_price(),
+                    createOrder.getStatus(),
+                    user,
+                    address
+            );
+
+            return orderRepository.save(newOrder);
+        } catch (Exception e) {
+            // Log the exception
+            System.err.println("Failed to save order: " + e.getMessage());
+            return null;
+        }
     }
 
     @Override

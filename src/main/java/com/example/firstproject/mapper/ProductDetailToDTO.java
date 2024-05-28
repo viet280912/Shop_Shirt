@@ -40,7 +40,7 @@ public class ProductDetailToDTO implements Function<ProductDetail, ProductDetail
         return new OrderDetail(
                 orderDetailDTO.getOrderDetail_id(),
                 orderRepository.findById(orderDetailDTO.getOrder_id()).orElseThrow(() -> new EntityNotFoundException("Not found order with id: " + orderDetailDTO.getOrder_id())),
-                convertToProductDetail(orderDetailDTO.getProductDetail()),
+                productDetailRepository.findItemByID(orderDetailDTO.getProductDetail().getProductDetailId()),
                 orderDetailDTO.getQuantity(),
                 orderDetailDTO.getPrice()
 
