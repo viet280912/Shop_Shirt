@@ -37,9 +37,9 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
-    public Cart addCartItemToCart(CartItemDTO cartItemDTO) {
+    public Cart addCartItemToCart(Integer userId, CartItemDTO cartItemDTO) {
         //find cart by user
-        User user = userRepository.findById(cartItemDTO.getUserId())
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + cartItemDTO.getUserId()));
         Cart cart = cartRepository.findCartByUser(user)
                 .orElseThrow(() -> new EntityNotFoundException("Cart not found with userid: "+ cartItemDTO.getUserId()));

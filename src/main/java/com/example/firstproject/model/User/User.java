@@ -2,6 +2,7 @@ package com.example.firstproject.model.User;
 
 import com.example.firstproject.model.Address.Address;
 import com.example.firstproject.model.Cart.Cart;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,5 +32,6 @@ public class User {
     private List<Address> addresses;
 
     @OneToOne(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private Cart cart;
 }

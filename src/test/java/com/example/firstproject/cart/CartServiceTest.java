@@ -140,7 +140,7 @@ public class CartServiceTest {
 
 
         //when
-        Cart result = cartService.addCartItemToCart(cartItemDTO1);
+        Cart result = cartService.addCartItemToCart(user.getUser_id(), cartItemDTO1);
         //then
         assertEquals(1, result.getCartItems().size());
         assertTrue(result.getCartItems()
@@ -157,7 +157,7 @@ public class CartServiceTest {
         cartItemDTO1.setProductDetailId(productDetail1.getProductDetail_id());
         cartItemDTO1.setQuantity(2);
         cartItemDTO1.setUserId(user.getUser_id());
-        Cart cartAfterAdd = cartService.addCartItemToCart(cartItemDTO1);
+        Cart cartAfterAdd = cartService.addCartItemToCart(user.getUser_id(), cartItemDTO1);
 
         //when
         Cart result = cartService.removeCartItemInCart(user.getUser_id(), cartAfterAdd.getCartItems().get(0).getCartItem_id());
@@ -173,21 +173,21 @@ public class CartServiceTest {
         cartItemDTO1.setProductDetailId(productDetail1.getProductDetail_id());
         cartItemDTO1.setQuantity(2);
         cartItemDTO1.setUserId(user.getUser_id());
-        cartService.addCartItemToCart(cartItemDTO1);
+        cartService.addCartItemToCart(user.getUser_id(), cartItemDTO1);
 
         CartItemDTO cartItemDTO2 = new CartItemDTO();
         cartItemDTO2.setId(0);
         cartItemDTO2.setProductDetailId(productDetail2.getProductDetail_id());
         cartItemDTO2.setQuantity(3);
         cartItemDTO2.setUserId(user.getUser_id());
-        cartService.addCartItemToCart(cartItemDTO2);
+        cartService.addCartItemToCart(user.getUser_id(), cartItemDTO2);
 
         CartItemDTO cartItemDTO3 = new CartItemDTO();
         cartItemDTO3.setId(0);
         cartItemDTO3.setProductDetailId(productDetail3.getProductDetail_id());
         cartItemDTO3.setQuantity(3);
         cartItemDTO3.setUserId(user.getUser_id());
-        cartService.addCartItemToCart(cartItemDTO3);
+        cartService.addCartItemToCart(user.getUser_id() ,cartItemDTO3);
 
         //when
         List<Integer> listIdDelete = cart.getCartItems().

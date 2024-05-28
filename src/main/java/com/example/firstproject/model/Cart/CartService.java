@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface CartService {
     Cart findCartByUser(Integer userId);
-    Cart addCartItemToCart(CartItemDTO cartItemDTO);
+    Cart addCartItemToCart(Integer userId, CartItemDTO cartItemDTO);
     Cart removeCartItemInCart(Integer userId, Integer cartItemId);
     Cart removeManyCartItemInCart(Integer userId, List<Integer> listIdCartItem);
 }
