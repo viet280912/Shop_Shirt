@@ -41,4 +41,13 @@ public class Order {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderDetail> orderDetails;
+
+    public Order(LocalDateTime order_dateTime, Float total_price, Status status, User user, Address address) {
+        this.order_dateTime = order_dateTime;
+        this.total_price = total_price;
+        this.status = status;
+        this.user = user;
+        this.address = address;
+    }
+
 }

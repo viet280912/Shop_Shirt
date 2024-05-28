@@ -28,4 +28,11 @@ public class OrderDetail {
     private int quantity;
 
     private Float price;
+
+    public OrderDetail(Order order, ProductDetail productDetail, int quantity, Float price) {
+        this.order = order;
+        this.productDetail = productDetail;
+        this.quantity = quantity;
+        this.price = price;
+    }
 }

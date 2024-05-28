@@ -1,8 +1,11 @@
 package com.example.firstproject.controller;
 
 import com.example.firstproject.dto.OrderDTO;
+import com.example.firstproject.model.Order.CreateOrder;
+import com.example.firstproject.model.Order.CreateOrderDetail;
 import com.example.firstproject.model.Order.Order;
 import com.example.firstproject.model.Order.OrderService;
+import com.example.firstproject.model.OrderDetail.OrderDetail;
 import com.example.firstproject.model.OrderDetail.OrderDetailService;
 import jakarta.annotation.Nullable;
 import lombok.AllArgsConstructor;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/order")
@@ -75,10 +79,34 @@ public class OrderController {
 //    create order
     @PostMapping("/add")
     ResponseEntity<?> createOrder (
-            OrderDTO orderDTO
+            @RequestBody OrderDTO orderDTO
     ) {
         Order order = orderService.createOrder(orderDTO);
-        if (order == null) {
+
+        if (order != null) {
+            return new ResponseEntity<>(
+                    order,
+                    HttpStatus.OK
+            );
+        }
+        return new ResponseEntity<>(
+                "Order failure",
+                HttpStatus.FAILED_DEPENDENCY
+        );
+    }
+    @PostMapping("/create")
+    ResponseEntity<?> createOrderFromCreate (
+            @RequestBody CreateOrder orderDTO
+    ) {
+        Order order = orderService.createOrder(orderDTO);
+
+        if (order != null) {
+            List<CreateOrderDetail> orderDetails = orderDTO.getOrdersDetail();
+            for (CreateOrderDetail orderDetail : orderDetails) {
+                orderDetail.setOrder_id(order.getOrder_id());
+            }
+            List<OrderDetail> orderDetailList = orderDetails.stream().map(createOrderDetail -> orderDetailService.createOrderDetail(createOrderDetail)).toList();
+
             return new ResponseEntity<>(
                     order,
                     HttpStatus.OK
@@ -97,3 +125,4 @@ class RangeTime {
     private Date time_x;
     private Date time_y;
 }
+

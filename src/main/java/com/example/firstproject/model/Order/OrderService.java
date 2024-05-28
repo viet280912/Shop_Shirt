@@ -34,8 +34,12 @@ public interface OrderService {
 //    get orders in times
     List<OrderDTO> getOrdersInTimes (Date time_x, Date time_y);
 
-//    add order
+//    create order from DTO
     Order createOrder (OrderDTO order);
+
+//    create order from CreateOrder
+    Order createOrder (CreateOrder order);
+
 
 //    update order
     Order updateOrder (OrderDTO orderDTO);

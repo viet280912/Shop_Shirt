@@ -1,6 +1,8 @@
 package com.example.firstproject.model.OrderDetail;
 
 import com.example.firstproject.dto.OrderDetailDTO;
+import com.example.firstproject.model.Order.CreateOrder;
+import com.example.firstproject.model.Order.CreateOrderDetail;
 
 import java.util.List;
 import java.util.Objects;
@@ -18,8 +20,11 @@ public interface OrderDetailService {
 //    get orders detail in range price
 
 
-//    add order detail
+//    create order detail
     OrderDetail createOrderDetail (OrderDetailDTO orderDetail);
+
+//    create order detail
+    OrderDetail createOrderDetail (CreateOrderDetail order);
 
 //    update order detail
     OrderDetail updateOrderDetail (OrderDetailDTO orderDetail);
