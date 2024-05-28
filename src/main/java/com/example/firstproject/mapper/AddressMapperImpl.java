@@ -1,6 +1,7 @@
 package com.example.firstproject.mapper;
 
 import com.example.firstproject.dto.AddressDTO;
+import com.example.firstproject.exception.NotFoundException;
 import com.example.firstproject.model.Address.Address;
 import com.example.firstproject.model.User.User;
 import com.example.firstproject.model.User.UserRepository;
@@ -22,7 +23,7 @@ public class AddressMapperImpl implements AddressMapper{
         address.setWard(addressDTO.getWard());
         address.setStreet(addressDTO.getStreet());
         User user = userRepository.findById(addressDTO.getUser_id())
-                .orElseThrow(() -> new EntityNotFoundException("Not found user with id: "+addressDTO.getUser_id()));
+                .orElseThrow(() -> new NotFoundException("Not found user with id: "+addressDTO.getUser_id()));
         address.setUser(user);
         return address;
     }

@@ -7,4 +7,5 @@ import java.util.List;
 public interface CartItemService {
     List<CartItem> getAllCartItemByUserId(Integer userId);
     CartItem updateCartItemById(CartItemDTO cartItemDTO);
+    CartItem createCartItem(CartItemDTO cartItemDTO);
 }

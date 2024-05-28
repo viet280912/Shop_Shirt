@@ -4,6 +4,7 @@ import com.example.firstproject.model.Address.Address;
 import com.example.firstproject.model.Address.AddressRepository;
 import com.example.firstproject.model.User.User;
 import com.example.firstproject.model.User.UserRepository;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -14,6 +15,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@Transactional
 public class AddressRepositoryTest {
     @Autowired
     private UserRepository userRepository;

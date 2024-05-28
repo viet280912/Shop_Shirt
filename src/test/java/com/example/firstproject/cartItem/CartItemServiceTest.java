@@ -1,18 +1,17 @@
-package com.example.firstproject.cart;
+package com.example.firstproject.cartItem;
 
 import com.example.firstproject.dto.CartItemDTO;
-import com.example.firstproject.dto.UserDTO;
-import com.example.firstproject.mapper.UserMapper;
 import com.example.firstproject.model.Cart.Cart;
-import com.example.firstproject.model.Cart.CartService;
 import com.example.firstproject.model.CartItem.CartItem;
+import com.example.firstproject.model.CartItem.CartItemRepository;
+import com.example.firstproject.model.CartItem.CartItemService;
 import com.example.firstproject.model.Product.Product;
 import com.example.firstproject.model.Product.ProductRepository;
 import com.example.firstproject.model.ProductDetail.ProductDetail;
 import com.example.firstproject.model.ProductDetail.ProductDetailRepository;
 import com.example.firstproject.model.User.User;
 import com.example.firstproject.model.User.UserRepository;
-import com.example.firstproject.model.User.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,27 +24,27 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Transactional
-public class CartServiceTest {
+public class CartItemServiceTest {
+    @Autowired
+    private CartItemRepository cartItemRepository;
+    @Autowired
+    private CartItemService cartItemService;
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private CartService cartService;
     @Autowired
     private ProductRepository productRepository;
     @Autowired
     private ProductDetailRepository productDetailRepository;
-
     private User user;
     private Cart cart;
     private Product product1, product2, product3;
     private ProductDetail productDetail1, productDetail2, productDetail3, productDetail4, productDetail5, productDetail6;
+
     @BeforeEach
     void setUp(){
         user = new User();
@@ -117,87 +116,66 @@ public class CartServiceTest {
 
     }
     @Test
-    void findCartByUserTest(){
-        //given
+    @Rollback
+    void createCartItemTest(){
+       CartItemDTO cartItemDTO = new CartItemDTO();
+       cartItemDTO.setProductDetailId(productDetail1.getProductDetail_id());
+       cartItemDTO.setQuantity(5);
+       cartItemDTO.setUserId(user.getUser_id());
 
         //when
-        Cart result = cartService.findCartByUser(user.getUser_id());
+        CartItem result = cartItemService.createCartItem(cartItemDTO);
+        CartItem ex = cartItemRepository.findById(result.getCartItem_id())
+                .orElseThrow(() -> new EntityNotFoundException("Not found cartItem"));
 
         //then
-        assertEquals(user.getUser_id(), result.getUser().getUser_id());
-        assertEquals(Date.valueOf(LocalDate.now()), result.getCreated_At());
+        assertEquals(ex.getCart().getCart_id(), result.getCart().getCart_id());
+        assertEquals(ex.getQuantity(), result.getQuantity());
     }
     @Test
     @Rollback
-    void addCartItemToCartTest1(){
-
-
+    void getAllCartItemByUserId_Success(){
         CartItemDTO cartItemDTO1 = new CartItemDTO();
-        cartItemDTO1.setId(0);
-        cartItemDTO1.setProductDetailId(productDetail1.getProductDetail_id());
-        cartItemDTO1.setQuantity(2);
         cartItemDTO1.setUserId(user.getUser_id());
-
-
-        //when
-        Cart result = cartService.addCartItemToCart(cartItemDTO1);
-        //then
-        assertEquals(1, result.getCartItems().size());
-        assertTrue(result.getCartItems()
-                .stream()
-                .map(CartItem::getQuantity)
-                .anyMatch(quantity -> quantity.equals(cartItemDTO1.getQuantity()))
-        );
-    }
-    @Test
-    @Rollback
-    void removeCartItemInCart_Success(){
-        CartItemDTO cartItemDTO1 = new CartItemDTO();
-        cartItemDTO1.setId(0);
+        cartItemDTO1.setQuantity(1);
         cartItemDTO1.setProductDetailId(productDetail1.getProductDetail_id());
-        cartItemDTO1.setQuantity(2);
-        cartItemDTO1.setUserId(user.getUser_id());
-        Cart cartAfterAdd = cartService.addCartItemToCart(cartItemDTO1);
-
-        //when
-        Cart result = cartService.removeCartItemInCart(user.getUser_id(), cartAfterAdd.getCartItems().get(0).getCartItem_id());
-
-        //then
-        assertEquals(0, result.getCartItems().size());
-    }
-    @Test
-    @Rollback
-    void removeManyCartItemInCart_Success(){
-        CartItemDTO cartItemDTO1 = new CartItemDTO();
-        cartItemDTO1.setId(0);
-        cartItemDTO1.setProductDetailId(productDetail1.getProductDetail_id());
-        cartItemDTO1.setQuantity(2);
-        cartItemDTO1.setUserId(user.getUser_id());
-        cartService.addCartItemToCart(cartItemDTO1);
+        CartItem cartItem1 = cartItemService.createCartItem(cartItemDTO1);
 
         CartItemDTO cartItemDTO2 = new CartItemDTO();
-        cartItemDTO2.setId(0);
-        cartItemDTO2.setProductDetailId(productDetail2.getProductDetail_id());
-        cartItemDTO2.setQuantity(3);
         cartItemDTO2.setUserId(user.getUser_id());
-        cartService.addCartItemToCart(cartItemDTO2);
+        cartItemDTO2.setQuantity(3);
+        cartItemDTO2.setProductDetailId(productDetail2.getProductDetail_id());
+        CartItem cartItem2 = cartItemService.createCartItem(cartItemDTO2);
 
         CartItemDTO cartItemDTO3 = new CartItemDTO();
-        cartItemDTO3.setId(0);
-        cartItemDTO3.setProductDetailId(productDetail3.getProductDetail_id());
-        cartItemDTO3.setQuantity(3);
         cartItemDTO3.setUserId(user.getUser_id());
-        cartService.addCartItemToCart(cartItemDTO3);
+        cartItemDTO3.setQuantity(3);
+        cartItemDTO3.setProductDetailId(productDetail3.getProductDetail_id());
+        CartItem cartItem3 = cartItemService.createCartItem(cartItemDTO3);
 
         //when
-        List<Integer> listIdDelete = cart.getCartItems().
-                stream()
-                .map(CartItem::getCartItem_id)
-                .collect(Collectors.toList());
-
-        Cart result = cartService.removeManyCartItemInCart(user.getUser_id(), listIdDelete);
+        List<CartItem> rs = cartItemService.getAllCartItemByUserId(user.getUser_id());
 
         //then
-        assertEquals(0, result.getCartItems().size());
+        assertEquals(3, rs.size());
+    }
+    @Test
+    @Rollback
+    void updateCartItemById_Success(){
+        //given
+        CartItemDTO cartItemDTO1 = new CartItemDTO();
+        cartItemDTO1.setUserId(user.getUser_id());
+        cartItemDTO1.setQuantity(1);
+        cartItemDTO1.setProductDetailId(productDetail1.getProductDetail_id());
+        CartItem cartItem1 = cartItemService.createCartItem(cartItemDTO1);
+
+        //when
+        cartItemDTO1.setId(cartItem1.getCartItem_id());
+        cartItemDTO1.setQuantity(10);
+        CartItem rs = cartItemService.updateCartItemById(cartItemDTO1);
+        //then
+
+        assertEquals(10, rs.getQuantity());
+
     }
 }

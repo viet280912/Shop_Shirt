@@ -13,4 +13,9 @@ public class CustomExceptionHandler {
     public ErrorResponse handlerNotFoundException (NotFoundException ex, WebRequest req) {
         return new ErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
     }
+    @ExceptionHandler(ErrorCreateBecauseEntityExistInLisException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponse handlerErrorCreateBecauseEntityExistInList(ErrorCreateBecauseEntityExistInLisException ex, WebRequest req){
+        return new ErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
+    }
 }
