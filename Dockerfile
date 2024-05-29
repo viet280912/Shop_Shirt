@@ -5,6 +5,6 @@ RUN mvn clean package -DskipTests
 
 FROM openjdk:17.0.1-jdk-slim
 WORKDIR /app
-COPY --from=build /app/target/FirstProject.jar FirstProject.jar
+COPY --from=build /out/artifacts/FirstProject_jar/FirstProject.jar FirstProject.jar
 EXPOSE 6868
 ENTRYPOINT ["java", "-jar", "FirstProject.jar"]
