@@ -5,7 +5,7 @@ RUN mvn clean package -DskipTests
 
 FROM openjdk:17.0.1-jdk-slim
 
-COPY  --from=build Shop_Shirt-0.0.1-SNAPSHOT.jar FirstProject.jar
+COPY  --from=build target/Shop_Shirt-0.0.1-SNAPSHOT.jar FirstProject.jar
 
 EXPOSE 6868
 
