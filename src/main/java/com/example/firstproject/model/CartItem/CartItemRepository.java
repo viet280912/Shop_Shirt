@@ -2,10 +2,13 @@ package com.example.firstproject.model.CartItem;
 
 import com.example.firstproject.model.Cart.Cart;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 @Repository
-public interface CartItemRepository extends JpaRepository<CartItem, Integer> {
+public interface CartItemRepository extends
+        JpaRepository<CartItem, Integer> ,
+        PagingAndSortingRepository<CartItem, Integer> {
     List<CartItem> findAllByCart(Cart cart);
 }

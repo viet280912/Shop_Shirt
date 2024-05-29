@@ -1,6 +1,7 @@
 package com.example.firstproject.address;
 
 import com.example.firstproject.dto.AddressDTO;
+import com.example.firstproject.exception.NotFoundException;
 import com.example.firstproject.mapper.AddressMapperImpl;
 import com.example.firstproject.model.Address.Address;
 import com.example.firstproject.model.User.User;
@@ -75,7 +76,7 @@ public class AddressMapperImplTest {
     void convertToAddress_ShouldThrowException_WhenUserDoesNotExist() {
         when(userRepository.findById(1)).thenReturn(Optional.empty());
 
-        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
+        NotFoundException exception = assertThrows(NotFoundException.class, () -> {
             addressMapper.convertToAddress(addressDTO);
         });
 
