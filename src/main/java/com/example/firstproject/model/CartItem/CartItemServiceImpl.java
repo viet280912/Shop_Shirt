@@ -11,6 +11,9 @@ import com.example.firstproject.model.User.User;
 import com.example.firstproject.model.User.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,12 +31,13 @@ public class CartItemServiceImpl implements CartItemService{
     @Autowired
     private ProductDetailRepository productDetailRepository;
     @Override
-    public List<CartItem> getAllCartItemByUserId(Integer userId) {
+    public Page<CartItem> getAllCartItemByUserId(Integer userId, Integer pageNo, Integer pageSize) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("Not found user with id: "+ userId));
         Cart cart = cartRepository.findCartByUser(user)
                 .orElseThrow(() -> new EntityNotFoundException("Not found cart with userId: "+ userId));
-        List<CartItem> cartItems = cartItemRepository.findAllByCart(cart);
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        Page<CartItem> cartItems = cartItemRepository.findAllByCart(cart, pageable);
         if (cartItems.isEmpty()){
             throw new RuntimeException("List cartItem is empty.");
         }
@@ -41,9 +45,10 @@ public class CartItemServiceImpl implements CartItemService{
     }
 
     @Override
-    public CartItem updateCartItemById(CartItemDTO cartItemDTO) {
-        CartItem cartItemUpdating = cartItemRepository.findById(cartItemDTO.getId())
+    public CartItem updateCartItemById(Integer itemId, CartItemDTO cartItemDTO) {
+        CartItem cartItemUpdating = cartItemRepository.findById(itemId)
                 .orElseThrow(() -> new EntityNotFoundException("Not found cartItem with id: " + cartItemDTO.getId()));
+
         cartItemUpdating.setQuantity(cartItemDTO.getQuantity());
         cartItemRepository.save(cartItemUpdating);
         return cartItemUpdating;
