@@ -5,9 +5,16 @@ RUN mvn clean package -DskipTests
 
 FROM openjdk:17.0.1-jdk-slim
 
-COPY  --from=build target/Shop_Shirt-0.0.1-SNAPSHOT.jar FirstProject.jar
+# Tạo một thư mục /app trong container để chứa file JAR
+WORKDIR /app
 
-EXPOSE 6868
+# Sao chép file JAR từ thư mục build context vào thư mục /app trong container
+COPY Shop_Shirt-0.0.1-SNAPSHOT.jar .
 
-ENTRYPOINT ["java", "-jar", "FirstProject.jar"]
+# Expose cổng mà ứng dụng sẽ chạy trên
+EXPOSE 8080
+
+# Chạy ứng dụng Spring Boot khi container được khởi động
+ENTRYPOINT ["java", "-jar", "Shop_Shirt-0.0.1-SNAPSHOT.jar"]
+
 
