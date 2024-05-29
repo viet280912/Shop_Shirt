@@ -12,7 +12,7 @@ WORKDIR /app
 COPY Shop_Shirt-0.0.1-SNAPSHOT.jar .
 
 # Expose cổng mà ứng dụng sẽ chạy trên
-EXPOSE 8080
+EXPOSE 6868
 
 # Chạy ứng dụng Spring Boot khi container được khởi động
 ENTRYPOINT ["java", "-jar", "Shop_Shirt-0.0.1-SNAPSHOT.jar"]
