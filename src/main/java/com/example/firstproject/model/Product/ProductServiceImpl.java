@@ -2,6 +2,7 @@ package com.example.firstproject.model.Product;
 
 import com.example.firstproject.dto.ProductDTO;
 import com.example.firstproject.exception.NotFoundException;
+import com.example.firstproject.mapper.CategoryToDTO;
 import com.example.firstproject.mapper.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class ProductServiceImpl implements ProductService{
     @Autowired
     private ProductMapper productMapper;
 
+
     @Override
     public List<ProductDTO> getAll() {
         return productRepository.findAll()
@@ -29,6 +31,16 @@ public class ProductServiceImpl implements ProductService{
         Optional<Product> productCheck = productRepository.checkEmptyProduct(id);
         assert productCheck.orElse(null) != null;
         return productMapper.apply(productCheck.orElse(null));
+    }
+
+    @Override
+    public List<ProductDTO> getProductsInRangePrice(Float x, Float y) {
+        List<Product> products = productRepository.getProductInRangePrice(x, y);
+
+        if (!products.isEmpty()) {
+            return products.stream().map(productMapper).collect(Collectors.toList());
+        }
+        throw new NotFoundException("Empty");
     }
 
     @Override

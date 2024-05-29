@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>FirstProject</artifactId>
+    <artifactId>Shop_Shirt</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>FirstProject</name>
-    <description>FirstProject</description>
+    <name>Shop_Shirt</name>
+    <description>Shop_Shirt</description>
     <properties>
         <java.version>17</java.version>
     </properties>
@@ -49,11 +49,6 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>com.example</groupId>-->
-<!--            <artifactId>FirstProject</artifactId>-->
-<!--            <version>0.0.1-SNAPSHOT</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
@@ -81,6 +76,12 @@
             <artifactId>mapstruct-processor</artifactId>
             <version>1.5.5.Final</version> <!-- Use the latest version available -->
             <scope>provided</scope>
+        </dependency>
+        <!-- swagger -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>3.0.0</version>
         </dependency>
     </dependencies>
 

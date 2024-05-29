@@ -32,7 +32,7 @@ public class ProductDTO {
     private Date update_At;
 
     @JsonProperty("categories")
-    private List<Category> categories;
+    private List<CategoryDTO> categories;
 
     @JsonProperty("details")
     private List<ProductDetailDTO> details;
