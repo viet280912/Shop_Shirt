@@ -39,6 +39,7 @@ jobs:
 
   docker:
     runs-on: ubuntu-latest
+    environment: mysql
     steps:
       - name: Checkout
         uses: actions/checkout@v4
