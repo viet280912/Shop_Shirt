@@ -18,6 +18,13 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    environment: mysql
+    env:
+      MYSQL_HOST: ${{ vars.MYSQL_HOST }}
+      MYSQL_PORT: ${{ vars.MYSQL_PORT }}
+      MYSQL_DB_NAME: ${{ vars.MYSQL_DB_NAME }}
+      MYSQL_USER: ${{ vars.MYSQL_USER }}
+      MYSQL_PASSWORD: ${{ vars.MYSQL_PASSWORD }}
 
     steps:
     - uses: actions/checkout@v4
