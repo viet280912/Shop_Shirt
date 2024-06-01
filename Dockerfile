@@ -9,7 +9,7 @@ FROM openjdk:17.0.1-jdk-slim
 WORKDIR /app
 
 # Sao chép file JAR từ thư mục build context vào thư mục /app trong container
-COPY Shop_Shirt-0.0.1-SNAPSHOT.jar .
+COPY target/Shop_Shirt-0.0.1-SNAPSHOT.jar .
 
 # Expose cổng mà ứng dụng sẽ chạy trên
 EXPOSE 6868
