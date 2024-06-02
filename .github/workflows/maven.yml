@@ -36,8 +36,6 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn clean package -DskipTests
-    - name: Checkout
-      uses: actions/checkout@v4
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
     - name: Set up Docker Buildx
