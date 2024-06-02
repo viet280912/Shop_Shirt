@@ -42,7 +42,7 @@ public class AddressController {
             @PathVariable Integer id,
             @RequestBody AddressDTO addressDTO
     ){
-        return new ResponseEntity<>(addressService.updateAddress(id, addressDTO), HttpStatus.OK);
+        return new ResponseEntity<>(addressMapper.convertToAddressDTO(addressService.updateAddress(id, addressDTO)), HttpStatus.OK);
     }
     @DeleteMapping("{id}")
     public ResponseEntity<?> deleteOneAddress(
