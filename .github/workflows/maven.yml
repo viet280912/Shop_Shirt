@@ -15,8 +15,29 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    environment: mysql
+    env:
+      MYSQL_HOST: ${{ vars.MYSQL_HOST }}
+      MYSQL_PORT: ${{ vars.MYSQL_PORT }}
+      MYSQL_DB_NAME: ${{ vars.MYSQL_DB_NAME }}
+      MYSQL_USER: ${{ vars.MYSQL_USER }}
+      MYSQL_PASSWORD: ${{ vars.MYSQL_PASSWORD }}
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Test
+      run: mvn -B test
 
+  build:
+    needs: test
     runs-on: ubuntu-latest
     environment: mysql
     env:
@@ -36,8 +57,6 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn clean package -DskipTests
-    - name: Test with Maven
-      run: mvn test
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v3
     - name: Set up Docker Buildx
