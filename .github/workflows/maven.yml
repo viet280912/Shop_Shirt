@@ -31,7 +31,7 @@ jobs:
 
     env:
       MYSQL_HOST: localhost
-      MYSQL_PORT: 3303
+      MYSQL_PORT: 3306
       MYSQL_DB_NAME: shop
       MYSQL_USER: phuc
       MYSQL_PASSWORD: 01052002
