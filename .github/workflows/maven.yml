@@ -30,11 +30,11 @@ jobs:
           - 3303:3306
 
     env:
-      MYSQL_HOST: localhost
+      MYSQL_HOST: db
       MYSQL_PORT: 3306
       MYSQL_DB_NAME: shop
       MYSQL_USER: phuc
-      MYSQL_PASSWORD: 01052002
+      MYSQL_PASSWORD: phuc152002
     steps:
     - uses: actions/checkout@v4
     - name: Set up JDK 17
