@@ -49,6 +49,7 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
+    environment: mysql
     services:
       db:
         image: mysql:latest
