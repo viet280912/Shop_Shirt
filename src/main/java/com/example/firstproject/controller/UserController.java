@@ -3,6 +3,9 @@ package com.example.firstproject.controller;
 import com.example.firstproject.dto.UserDTO;
 import com.example.firstproject.model.User.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,6 +16,11 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @GetMapping
+    public ResponseEntity<?> getTest(){
+        return new ResponseEntity<>("user", HttpStatus.OK);
+    }
 
     @PostMapping("/add-new-user")
     public UserDTO createUser(@RequestBody UserDTO userDto) {

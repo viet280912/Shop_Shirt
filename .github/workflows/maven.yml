@@ -92,4 +92,4 @@ jobs:
         context: .
         file: Dockerfile
         push: true
-        tags: phuc1502tranxuan/shopshirt_hub:latest
+        tags: phuc1502tranxuan/shopshirt03:latest
