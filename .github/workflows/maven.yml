@@ -30,7 +30,7 @@ jobs:
           - 3303:3306
 
     env:
-      MYSQL_HOST: db
+      MYSQL_HOST: localhost
       MYSQL_PORT: 3303
       MYSQL_DB_NAME: shop
       MYSQL_USER: phuc
@@ -49,13 +49,22 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
-    environment: mysql
+    services:
+      db:
+        image: mysql:latest
+        env:
+          MYSQL_ROOT_PASSWORD: 01052002
+          MYSQL_DATABASE: shop
+          MYSQL_USER: phuc
+          MYSQL_PASSWORD: phuc152002
+        ports:
+          - 3303:3306
     env:
-      MYSQL_HOST: ${{ vars.MYSQL_HOST }}
-      MYSQL_PORT: ${{ vars.MYSQL_PORT }}
-      MYSQL_DB_NAME: ${{ vars.MYSQL_DB_NAME }}
-      MYSQL_USER: ${{ vars.MYSQL_USER }}
-      MYSQL_PASSWORD: ${{ vars.MYSQL_PASSWORD }}
+      MYSQL_HOST: localhost
+      MYSQL_PORT: 3303
+      MYSQL_DB_NAME: shop
+      MYSQL_USER: phuc
+      MYSQL_PASSWORD: phuc152002
 
     steps:
     - uses: actions/checkout@v4
