@@ -19,7 +19,7 @@ jobs:
     name: Unit Tests
     runs-on: ubuntu-latest
     services:
-      mysql:
+      db:
         image: mysql:latest
         env:
           MYSQL_ROOT_PASSWORD: 01052002
@@ -28,14 +28,9 @@ jobs:
           MYSQL_PASSWORD: phuc152002
         ports:
           - 3303:3306
-        options: >-
-          --health-cmd:"mysqladmin ping --silent"
-          --health-interval=10s
-          --health-timeout=5s
-          --health-retries=3
 
     env:
-      MYSQL_HOST: mysql
+      MYSQL_HOST: db
       MYSQL_PORT: 3306
       MYSQL_DB_NAME: shop
       MYSQL_USER: phuc
