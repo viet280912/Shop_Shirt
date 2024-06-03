@@ -30,7 +30,7 @@ jobs:
           - 3303:3306
 
     env:
-      MYSQL_HOST: localhost
+      MYSQL_HOST: db
       MYSQL_PORT: 3303
       MYSQL_DB_NAME: shop
       MYSQL_USER: phuc
