@@ -6,16 +6,16 @@ import java.util.List;
 
 public interface ProductService {
 //    get all product
-    List<ProductDTO> getAll();
+    DataProduct getAll(int page);
 
 //    get single product by id
     ProductDTO getProductByID(int id);
 
 //    get product in range price
-    List<ProductDTO> getProductsInRangePrice (Float x, Float y);
+    DataProduct getProductsInRangePrice (Float x, Float y, int page);
 
 //    search product by name, category
-    List<ProductDTO> searchProductsByName(String name, String category);
+    List<ProductDTO> searchProductsByName(String name, String category, int page);
 
 //    add product
     Product createProduct (ProductDTO productDTO);

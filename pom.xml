@@ -77,12 +77,6 @@
             <version>1.5.5.Final</version> <!-- Use the latest version available -->
             <scope>provided</scope>
         </dependency>
-        <!-- swagger -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-boot-starter</artifactId>
-            <version>3.0.0</version>
-        </dependency>
     </dependencies>
 
     <build>

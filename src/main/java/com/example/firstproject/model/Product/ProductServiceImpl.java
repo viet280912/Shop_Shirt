@@ -5,8 +5,12 @@ import com.example.firstproject.exception.NotFoundException;
 import com.example.firstproject.mapper.CategoryToDTO;
 import com.example.firstproject.mapper.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,12 +22,42 @@ public class ProductServiceImpl implements ProductService{
     @Autowired
     private ProductMapper productMapper;
 
-
     @Override
-    public List<ProductDTO> getAll() {
-        return productRepository.findAll()
-                .stream()
-                .map(productMapper).collect(Collectors.toList());
+    public DataProduct getAll(int page) {
+        Pageable pageable = PageRequest.of(page, 100);
+        try {
+            Page<Product> productPageable = productRepository.getProductPage(pageable);
+            List<ProductDTO> productDTOS;
+
+            if (!productPageable.isEmpty()) {
+                productDTOS = productPageable
+                        .getContent()
+                        .stream()
+                        .map(productMapper).collect(Collectors.toList());
+                return new DataProduct(
+                        productDTOS.size(),
+                        page,
+                        page,
+                        "Successfully",
+                        productDTOS
+                );
+            }
+            return new DataProduct(
+                    0,
+                    page,
+                    page,
+                    "Successfully",
+                    new ArrayList<>()
+            );
+        } catch (Exception e) {
+            return new DataProduct(
+                    0,
+                    page,
+                    0,
+                    e.getMessage(),
+                    new ArrayList<>()
+            );
+        }
     }
 
     @Override
@@ -34,19 +68,50 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<ProductDTO> getProductsInRangePrice(Float x, Float y) {
-        List<Product> products = productRepository.getProductInRangePrice(x, y);
+    public DataProduct getProductsInRangePrice(Float x, Float y, int page) {
+        Pageable pageable = PageRequest.of(page, 100);
 
-        if (!products.isEmpty()) {
-            return products.stream().map(productMapper).collect(Collectors.toList());
+        try {
+            DataProduct product;
+            Page<Product> productPageable = productRepository.getProductInRangePrice(x, y, pageable);
+            List<ProductDTO> productDTOS;
+
+            if (!productPageable.isEmpty()) {
+                productDTOS = productPageable
+                        .getContent()
+                        .stream()
+                        .map(productMapper).collect(Collectors.toList());
+                return new DataProduct(
+                        productDTOS.size(),
+                        page,
+                        page,
+                        "Successfully",
+                        productDTOS
+                );
+            }
+            return new DataProduct(
+                    0,
+                    page,
+                    page,
+                    "Successfully",
+                    new ArrayList<>()
+            );
+        } catch (Exception e) {
+            return new DataProduct(
+                    0,
+                    page,
+                    0,
+                    e.getMessage(),
+                    new ArrayList<>()
+            );
         }
-        throw new NotFoundException("Empty");
     }
 
     @Override
-    public List<ProductDTO> searchProductsByName(String name, String category) {
-        List<Product> products = productRepository.searchProduct(name, category);
-        if (!products.isEmpty()) {
+    public List<ProductDTO> searchProductsByName(String name, String category, int page) {
+        Pageable pageable = PageRequest.of(page, 100);
+        Page<Product> products = productRepository.searchProduct(name, category, pageable);
+        if (!products.getContent().isEmpty()) {
             return products.stream().map(productMapper).collect(Collectors.toList());
         }
         throw new NotFoundException("Empty");

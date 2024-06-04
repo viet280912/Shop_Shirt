@@ -24,7 +24,6 @@ com\example\firstproject\model\Address\AddressService.class
 com\example\firstproject\controller\ProductDetailController.class
 com\example\firstproject\model\ProductDetail\ProductDetail.class
 com\example\firstproject\mapper\ProductMapper.class
-com\example\firstproject\config\SwaggerConfig.class
 com\example\firstproject\model\Category\Category.class
 com\example\firstproject\model\ProductDetail\ProductDetailServiceImpl.class
 com\example\firstproject\mapper\ProductDetailToDTO.class
@@ -58,12 +57,14 @@ com\example\firstproject\model\Status\Status.class
 com\example\firstproject\model\CartItem\CartItemService.class
 com\example\firstproject\model\ProductDetail\ProductDetailService.class
 com\example\firstproject\controller\RangeTime.class
+com\example\firstproject\controller\RootController.class
 com\example\firstproject\model\Address\AddressRepository.class
 com\example\firstproject\model\OrderDetail\OrderDetailRepository.class
 com\example\firstproject\model\ProductDetail\ProductDetailRepository.class
 com\example\firstproject\mapper\CartItemMapperImpl.class
 com\example\firstproject\FirstProjectApplication.class
 com\example\firstproject\controller\ProductController.class
+com\example\firstproject\model\Product\DataProduct.class
 com\example\firstproject\model\Order\OrderRepository.class
 com\example\firstproject\mapper\UserMapperImpl.class
 com\example\firstproject\controller\AddressController.class
