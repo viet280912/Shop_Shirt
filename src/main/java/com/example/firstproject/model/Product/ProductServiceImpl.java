@@ -26,7 +26,6 @@ public class ProductServiceImpl implements ProductService{
     public DataProduct getAll(int page) {
         Pageable pageable = PageRequest.of(page, 100);
         try {
-            DataProduct product;
             Page<Product> productPageable = productRepository.getProductPage(pageable);
             List<ProductDTO> productDTOS;
 

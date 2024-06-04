@@ -1,0 +1,9 @@
+com\example\firstproject\address\AddressMapperImplTest.class
+com\example\firstproject\cart\CartControllerTest.class
+com\example\firstproject\address\AddressServiceTest.class
+com\example\firstproject\address\AddressRepositoryTest.class
+com\example\firstproject\address\AddressControllerTest.class
+com\example\firstproject\cartItem\CartItemServiceTest.class
+com\example\firstproject\cart\CartServiceTest.class
+com\example\firstproject\cartItem\CartItemControllerTest.class
+com\example\firstproject\FirstProjectApplicationTests.class

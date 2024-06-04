@@ -38,5 +38,4 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query(value = "SELECT products.* FROM products WHERE products.price BETWEEN :price_x AND :price_y", nativeQuery = true)
     Page<Product> getProductInRangePrice(Float price_x, Float price_y, Pageable pageable);
 
-
 }
