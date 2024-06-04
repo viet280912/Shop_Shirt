@@ -1,0 +1,95 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-maven
+
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: mysql:latest
+        env:
+          MYSQL_ROOT_PASSWORD: 01052002
+          MYSQL_DATABASE: shop
+          MYSQL_USER: phuc
+          MYSQL_PASSWORD: phuc152002
+        ports:
+          - 3303:3306
+
+    env:
+      MYSQL_HOST: localhost
+      MYSQL_PORT: 3303
+      MYSQL_DB_NAME: shop
+      MYSQL_USER: phuc
+      MYSQL_PASSWORD: phuc152002
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Test
+      run: mvn -B test
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    environment: mysql
+    services:
+      db:
+        image: mysql:latest
+        env:
+          MYSQL_ROOT_PASSWORD: 01052002
+          MYSQL_DATABASE: shop
+          MYSQL_USER: phuc
+          MYSQL_PASSWORD: phuc152002
+        ports:
+          - 3303:3306
+    env:
+      MYSQL_HOST: localhost
+      MYSQL_PORT: 3303
+      MYSQL_DB_NAME: shop
+      MYSQL_USER: phuc
+      MYSQL_PASSWORD: phuc152002
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Build with Maven
+      run: mvn clean package -DskipTests
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ vars.DOCKERHUB_USERNAME }}
+        password: ${{ vars.DOCKERHUB_TOKEN }}
+    - name: Build and push
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: Dockerfile
+        push: true
+        tags: phuc1502tranxuan/shopshirt03:latest

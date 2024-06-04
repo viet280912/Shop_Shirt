@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.test.annotation.Rollback;
 
 import java.sql.Date;
@@ -154,10 +155,10 @@ public class CartItemServiceTest {
         CartItem cartItem3 = cartItemService.createCartItem(cartItemDTO3);
 
         //when
-        List<CartItem> rs = cartItemService.getAllCartItemByUserId(user.getUser_id());
+        Page<CartItem> rs = cartItemService.getAllCartItemByUserId(user.getUser_id(), 1, 2);
 
         //then
-        assertEquals(3, rs.size());
+        assertEquals(3, rs.getTotalElements());
     }
     @Test
     @Rollback
@@ -172,7 +173,7 @@ public class CartItemServiceTest {
         //when
         cartItemDTO1.setId(cartItem1.getCartItem_id());
         cartItemDTO1.setQuantity(10);
-        CartItem rs = cartItemService.updateCartItemById(cartItemDTO1);
+        CartItem rs = cartItemService.updateCartItemById(cartItem1.getCartItem_id(),cartItemDTO1);
         //then
 
         assertEquals(10, rs.getQuantity());
