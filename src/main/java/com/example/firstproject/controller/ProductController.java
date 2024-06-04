@@ -3,6 +3,7 @@ package com.example.firstproject.controller;
 import com.example.firstproject.dto.OrderDTO;
 import com.example.firstproject.dto.ProductDTO;
 import com.example.firstproject.exception.NotFoundException;
+import com.example.firstproject.model.Product.DataProduct;
 import com.example.firstproject.model.Product.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,7 +24,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/product")
 @RequiredArgsConstructor
-@Api(value = "User Management System", description = "Operations pertaining to user management")
+@Api(value = "hello", description = "Sample hello world application")
 public class ProductController {
     @Autowired
     private ProductService productService;
@@ -36,24 +37,22 @@ public class ProductController {
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
     })
-        @GetMapping("/all")
+    @GetMapping("/all")
     ResponseEntity<?> getAllProduct (
             @Nullable
-            @RequestBody ProductPrice productPrice
+            @RequestBody ProductPrice productPrice,
+            @RequestParam int page
     ) {
-        List<ProductDTO> productDTOS;
+        DataProduct productDTOS;
         if (productPrice != null ) {
-            productDTOS = productService.getProductsInRangePrice(productPrice.getPrice_x(), productPrice.getPrice_y());
+            productDTOS = productService.getProductsInRangePrice(productPrice.getPrice_x(), productPrice.getPrice_y(), page);
         } else {
-            productDTOS = productService.getAll();
+            productDTOS = productService.getAll(page);
         }
-        if (!productDTOS.isEmpty()) {
-            return new ResponseEntity<>(
-                    productDTOS,
-                    HttpStatus.OK
-            );
-        }
-        throw new NotFoundException("Empty list");
+        return new ResponseEntity<>(
+                productDTOS,
+                HttpStatus.OK
+        );
 
     }
 
@@ -61,9 +60,10 @@ public class ProductController {
     @GetMapping("/search")
     ResponseEntity<?> getAllProductByNameAndCategory (
             @RequestParam String name,
-            @RequestParam String category
+            @RequestParam String category,
+            @RequestParam int page
     ) {
-        List<ProductDTO> productDTOS = productService.searchProductsByName(name, category);
+        List<ProductDTO> productDTOS = productService.searchProductsByName(name, category, page);
 
         if (!productDTOS.isEmpty()) {
             return new ResponseEntity<>(

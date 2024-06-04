@@ -5,6 +5,8 @@ import com.example.firstproject.model.Category.Category;
 import com.example.firstproject.model.Product.Product;
 import com.example.firstproject.model.Product.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +30,7 @@ public class CategoryToDTO implements Function<Category, CategoryDTO> {
         return new Category(
                 categoryDTO.getCategory_id(),
                 categoryDTO.getName(),
-                productRepository.getProductByCategory(categoryDTO.getCategory_id())
+                productRepository.getProductByCategoryNotPage(categoryDTO.getCategory_id())
         );
     }
 }
